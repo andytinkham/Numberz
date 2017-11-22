@@ -1,0 +1,9 @@
+#directories
+/x64
+/debug
+/.vs
+
+#files
+*.exe
+*.log
+*.tlog
