@@ -84,7 +84,7 @@ void NumberzLogic(HWND hwnd)
 	SetDlgItemText(hwnd, IDC_STATIC5, tmp[4]);
 	
 	// bug #2 .02% of the time, the total will be one less
-	//        and .002% of the time the total will be one more. 
+	//        and .02% of the time the total will be one more. 
 	double random = (double)(rand() / (double)RAND_MAX);
 	if (random < 0.002)
 	{
