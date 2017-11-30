@@ -14,17 +14,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR pCmdLine, 
 	ShowWindow(hwnd, iCmdShow);
 
 	MSG msg;
+	BOOL ret;
 
-	while (GetMessage(&msg, hwnd, 0, 0)) 
-	{ 
+	while ((ret = GetMessage(&msg, 0, 0, 0)) != 0) 
+	{
+		if (ret == -1)
+			return -1; 
+		
 		if (!IsDialogMessage(hwnd, &msg))
 		{ 
 			TranslateMessage(&msg); 
 			DispatchMessage(&msg); 
 		} 
 	} 
-
-	DestroyWindow(hwnd);
 
 	return 0;
 }
@@ -35,12 +37,17 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
 	{
 	case WM_INITDIALOG:
 		FixFont(hwnd);
+		srand((unsigned)time(NULL));
 		break;
-	case WM_CLOSE:
-		EndDialog(hwnd, 0);
-		PostQuitMessage(0);
-		return FALSE;
 
+	case WM_CLOSE:
+		DestroyWindow(hwnd);
+		return TRUE;
+	
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		return TRUE;
+	
 	case WM_COMMAND:
 		switch (LOWORD(wParam))
 		{
@@ -49,6 +56,7 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
 				NumberzLogic(hwnd);
 			}
 		}
+		break;
 	default:
 		return FALSE;
 	}
@@ -63,7 +71,6 @@ void NumberzLogic(HWND hwnd)
 	WCHAR ttl[3];
 	int total = 0;
 
-	srand(GetTickCount());
 	for (int i = 0; i < 5; i++)
 	{
 		vals[i] = (rand() % 10);
@@ -84,7 +91,7 @@ void NumberzLogic(HWND hwnd)
 	SetDlgItemText(hwnd, IDC_STATIC5, tmp[4]);
 	
 	// bug #2 .02% of the time, the total will be one less
-	//        and .002% of the time the total will be one more. 
+	//    and .02% of the time, the total will be one more. 
 	double random = (double)(rand() / (double)RAND_MAX);
 	if (random < 0.002)
 	{

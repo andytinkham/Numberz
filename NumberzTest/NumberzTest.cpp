@@ -31,7 +31,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 	DWORD dwLen = 0;
 
 	HWND hwnd = FindWindow(NULL, L"Numberz");
-	HANDLE hFile = CreateFile(L"NumberzTestOutput.log", 
+	HANDLE hFile = CreateFile(L"NumberzTestOutput.log",
 								GENERIC_WRITE,
 								0, 
 								NULL, 
@@ -52,9 +52,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 	{
 		SendDlgItemMessage(hwnd, buttonID, WM_LBUTTONDOWN, 0, 0);
 		SendDlgItemMessage(hwnd, buttonID, WM_LBUTTONUP, 0, 0);
+		// let it draw - NOTE: In general, don't sleep in test code. We could use waitforinputidle or wait for the paint to finish, but for 
+		// this sample test, it will work /most/ of the time. Repeat - don't do this in real tests.
+		Sleep(10);
 		int total = 0;
 		for (int i = 0; i < 5; i++)
 		{
+
 			int val = GetDlgItemInt(hwnd, numIDs[i], NULL, FALSE);
 			switch (val)
 			{
@@ -94,8 +98,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 			additionErrors++;
 		}
 	}
-	StringCchPrintf(buffer, 256, L"Total of %d addition errors in %d iterations\r\n", 
-		additionErrors, LoopCount);
+	StringCchPrintf(buffer, 256, L"Total of %d addition errors in %d iterations (%f)\r\n", 
+		additionErrors, LoopCount, (double)additionErrors/(double)LoopCount);
 		Log(hFile, buffer);
 
 
