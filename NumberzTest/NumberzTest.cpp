@@ -38,7 +38,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 								CREATE_ALWAYS,
 								FILE_ATTRIBUTE_NORMAL, 
 								NULL);
-	int one = 0, two = 0, three = 0, four = 0, five = 0, six = 0;
+	int zero = 0, one = 0, two = 0, three = 0, four = 0, five = 0;
+	int six = 0, seven = 0, eight = 0, nine = 0;;
 
 	int LoopCount = _wtoi(lpCmdLine);
 	if (LoopCount == 0)
@@ -62,6 +63,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 			int val = GetDlgItemInt(hwnd, numIDs[i], NULL, FALSE);
 			switch (val)
 			{
+			
+				case 0:
+					zero++;
+					break;
 				case 1:
 					one++;
 					break;
@@ -80,6 +85,16 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 				case 6:
 					six++;
 					break;
+				case 7:
+					seven++;
+					break;
+				case 8:
+					eight++;
+					break;
+				case 9:
+					nine++;
+					break;
+
 				default:
 					break;
 			}
@@ -107,10 +122,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,  LPTSTR lpC
 	StringCchPrintf(buffer, 256, L"\r\n================================================\r\n");
 	Log(hFile, buffer);
 
-	StringCchPrintf(buffer, 256, L"Totals:\t1\t2\t3\t4\t5\t6\r\n");
+	StringCchPrintf(buffer, 256, L"Totals:\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\r\n");
 	Log(hFile, buffer);
 
-	StringCchPrintf(buffer, 256, L"\t%d\t%d\t%d\t%d\t%d\t%d\r\n", one, two, three, four, five, six);
+	StringCchPrintf(buffer, 256, L"\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\r\n", 
+		zero, one, two, three, four, five, six,seven, eight, nine);
 	Log(hFile, buffer);
 	
 	CloseHandle(hFile);
